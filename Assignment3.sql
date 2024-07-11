@@ -24,14 +24,14 @@ AND id IN (SELECT order_id
            WHERE status="Placed");
 
 
-# Display list of shoppers which haven't ordered anything since last month.
+-- Display list of shoppers which haven't ordered anything since last month.
 SELECT u.id, u.name, o.order_date
 FROM users u
 INNER JOIN orders o
 ON u.id = o.user_id
 WHERE u.usertype = 'Shopper' AND u.id NOT IN(SELECT user_id
-										     FROM orders
-											 WHERE order_date >= (CURDATE()-INTERVAL 1 MONTH));
+					     FROM orders
+					     WHERE order_date >= (CURDATE()-INTERVAL 1 MONTH));
                                          
 # Display list of shopper along with orders placed by them in last 15 days.
 SELECT u.id, u.name, o.id, o.order_date
@@ -39,18 +39,18 @@ FROM users u
 INNER JOIN orders o
 ON u.id = o.user_id
 WHERE u.usertype = 'Shopper' AND u.id IN(SELECT user_id
-										 FROM orders
+			  	    	 FROM orders
                                          WHERE order_date >= (CURDATE() - INTERVAL 15 DAY));
                                          
 
-# Display list of order items which are in “shipped” state for particular Order Id
+-- Display list of order items which are in “shipped” state for particular Order Id
 SELECT i.id, p.name
 FROM product p 
 INNER JOIN items i
 ON i.product_id = p.id
 WHERE i.status = "Shipped";
 
-# Display list of order items along with order placed date which fall between Rs 20 to Rs 50 price.
+-- Display list of order items along with order placed date which fall between Rs 20 to Rs 50 price.
 SELECT o.id, o.user_id, o.order_date, i.price
 FROM orders o
 LEFT JOIN items i
